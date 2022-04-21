@@ -22,4 +22,7 @@ async def on_message(message):
         await message.channel.send("Hello! I'm Mihate")
         await message.channel.send("https://i0.wp.com/wibumesta.com/wp-content/uploads/2021/07/3306977_791_1084_173752.jpeg?resize=791%2C1084&ssl=1")
 
-client.run(os.environ['TOKEN'])
+# dev token
+token = input("Enter bot token: ")
+client.run(token)
+# client.run(os.environ['TOKEN'])
