@@ -5,15 +5,43 @@ from art import *
 from random import *
 import random
 import time
-
 from discord.ext import commands
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 
 client = commands.Bot(command_prefix="%")
 
 # prefix = (os.environ['PREFIX'])
 token = input("Enter bot token: ")
+
+class randomHiuraEmbed:
+    def __init__(self,rarity):
+        self.rarity = rarity
+        self.semipath = './assets/'+self.rarity+'/'
+        self.list = os.listdir(self.semipath)
+        self.RNG = random.choice(self.list)
+        self.path = self.semipath+self.RNG;
+
+    def colorGet(self):
+        if (self.rarity == 'Common'):
+            return 0xffffff
+        elif(self.rarity == 'Rare'):
+            return 0xa7a7ff
+        elif(self.rarity == 'Elite'):
+            return 0xcda7ff
+        elif(self.rarity == 'SSR'):
+            return 0xfff169
+        elif(self.rarity == 'UR'):
+            return 0x80ff69
+
+    def createFile(self):
+        return discord.File(self.path,filename = "image.jpg")
+
+    def createEmbed(self):
+        embed = discord.Embed(title = "Mihate Hiura",description="You rolled a "+self.rarity+" Hiura! "+randart(),color=self.colorGet())
+        attach =  self.createFile()
+        embed.set_image(url='attachment://image.jpg')
+        return embed
 
 # on-ready console notification & bot presence
 @client.event
@@ -52,36 +80,22 @@ async def lineart(ctx):
 async def imageroll(ctx):
     seed(round(time.time() * 1000))
     rng = randint(0,1000)
-    if(0<rng<599):
-            cCommon = './assets/Common/'
-            cList = os.listdir(cCommon)
-            cRNG = random.choice(cList)
-            cPath = cCommon+cRNG;
-            await ctx.channel.send(file=discord.File(cPath))
-    elif(599<rng<850):
-            eCommon = './assets/E/'
-            eList = os.listdir(eCommon)
-            eRNG = random.choice(eList)
-            ePath = eCommon+eRNG;
-            await ctx.channel.send(file=discord.File(ePath))
-    elif(850<rng<980):
-            rCommon = './assets/Rare/'
-            rList = os.listdir(rCommon)
-            rRNG = random.choice(rList)
-            rPath = rCommon+rRNG;
-            await ctx.channel.send(file=discord.File(rPath))
-    elif(980<rng<998):
-            sCommon = './assets/SSR/'
-            sList = os.listdir(sCommon)
-            sRNG = random.choice(sList)
-            sPath = sCommon+sRNG;
-            await ctx.channel.send(file=discord.File(sPath))
-    elif(998<rng<1000):
-            uCommon = './assets/UR/'
-            uList = os.listdir(uCommon)
-            uRNG = random.choice(uList)
-            uPath = uCommon+uRNG;
-            await ctx.channel.send(file=discord.File(uPath))
+    name = "Mihate Hiura"
+    if(0<rng<450):
+            commonHiura = randomHiuraEmbed('Common')
+            await ctx.channel.send(file=commonHiura.createFile(),embed=commonHiura.createEmbed())
+    elif(450<rng<750):
+            rareHiura = randomHiuraEmbed('Rare')
+            await ctx.channel.send(file=rareHiura.createFile(),embed=rareHiura.createEmbed())
+    elif(750<rng<850):
+            eliteHiura = randomHiuraEmbed('Elite')
+            await ctx.channel.send(file=eliteHiura.createFile(),embed=eliteHiura.createEmbed())
+    elif(850<rng<975):
+            ssrHiura = randomHiuraEmbed('SSR')
+            await ctx.channel.send(file=ssrHiura.createFile(),embed=ssrHiura.createEmbed())
+    elif(975<rng<1000):
+            urHiura = randomHiuraEmbed('UR')
+            await ctx.channel.send(file=urHiura.createFile(),embed=urHiura.createEmbed())
 
 # dev token
 client.run(token)
