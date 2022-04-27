@@ -4,6 +4,7 @@ import os
 from art import *
 from random import *
 import random
+import time
 
 from discord.ext import commands
 
@@ -49,37 +50,37 @@ async def lineart(ctx):
 # random hiura image
 @client.command(help="Sends an image of Hiura with randomized rarity")
 async def imageroll(ctx):
-    seed(109)
+    seed(round(time.time() * 1000))
     rng = randint(0,1000)
     if(0<rng<599):
-            common = './assets/Common/'
-            cList = os.listdir(common)
+            cCommon = './assets/Common/'
+            cList = os.listdir(cCommon)
             cRNG = random.choice(cList)
-            cPath = common+cRNG;
+            cPath = cCommon+cRNG;
             await ctx.channel.send(file=discord.File(cPath))
-    elif(600<rng<850):
-            common = './assets/Elite/'
-            eList = os.listdir(common)
-            eRNG = random.choice(cList)
-            ePath = common+cRNG;
+    elif(599<rng<850):
+            eCommon = './assets/E/'
+            eList = os.listdir(eCommon)
+            eRNG = random.choice(eList)
+            ePath = eCommon+eRNG;
             await ctx.channel.send(file=discord.File(ePath))
-    elif(851<rng<980):
-            common = './assets/Rare/'
-            rList = os.listdir(common)
-            rRNG = random.choice(cList)
-            rPath = common+cRNG;
+    elif(850<rng<980):
+            rCommon = './assets/Rare/'
+            rList = os.listdir(rCommon)
+            rRNG = random.choice(rList)
+            rPath = rCommon+rRNG;
             await ctx.channel.send(file=discord.File(rPath))
-    elif(981<rng<998):
-            common = './assets/SSR/'
-            sList = os.listdir(common)
-            sRNG = random.choice(cList)
-            sPath = common+cRNG;
+    elif(980<rng<998):
+            sCommon = './assets/SSR/'
+            sList = os.listdir(sCommon)
+            sRNG = random.choice(sList)
+            sPath = sCommon+sRNG;
             await ctx.channel.send(file=discord.File(sPath))
-    elif(999<rng<1000):
-            common = './assets/UR/'
-            uList = os.listdir(common)
-            uRNG = random.choice(cList)
-            uPath = common+cRNG;
+    elif(998<rng<1000):
+            uCommon = './assets/UR/'
+            uList = os.listdir(uCommon)
+            uRNG = random.choice(uList)
+            uPath = uCommon+uRNG;
             await ctx.channel.send(file=discord.File(uPath))
 
 # dev token
