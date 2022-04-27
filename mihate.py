@@ -65,16 +65,15 @@ async def on_message(message):
 
     if message.author == mihate.user:
         return
-    URL = URLExtract().find_urls(message.content)[0]
-    domain = urlparse(URL).netloc
-    print(URL)
-    print(domain)
-    if (domain in linksJSON):
-        print('\033[31m'+text2art("!aegis!", font='tarty1'))
-        print('A message containing illegal link '+message.content+' sent by '+message.author.name+'#'+message.author.discriminator+' was detected by AEGIS')
-        #await message.delete()
-        await message.channel.send(">>> **User "+message.author.mention+" tried to send malicious links.**"+"\n\n"+"@here do **NOT** click on these link(s)."+"\n\n"+"These link(s) will steal your account information at best and compromise your machine at worst.")
-    await mihate.process_commands(message)
+    if (URLExtract().has_urls(message.content) == True):
+        if (urlparse(URLExtract().find_urls(message.content)[0]).netloc in linksJSON):
+            print('\033[31m'+text2art("!aegis!", font='tarty1'))
+            print('A message containing illegal link '+message.content+' sent by '+message.author.name+'#'+message.author.discriminator+' was detected by AEGIS')
+            #await message.delete()
+            await message.channel.send(">>> **User "+message.author.mention+" tried to send malicious links.**"+"\n\n"+"@here do **NOT** click on these link(s)."+"\n\n"+"These link(s) will steal your account information at best and compromise your machine at worst.")
+        await mihate.process_commands(message)
+    elif (URLExtract().has_urls(message.content) == False):
+        await mihate.process_commands(message)
 
 # greet command
 @mihate.command(help="Greets the user")
