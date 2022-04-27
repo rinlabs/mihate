@@ -6,13 +6,21 @@ from random import *
 import random
 import time
 from discord.ext import commands
+import requests
+import json
+from urlextract import URLExtract
+from urllib.parse import urlparse
 
-logging.basicConfig(level=logging.DEBUG)
-
-client = commands.Bot(command_prefix="%")
-
+#logging
+logging.basicConfig(level=logging.INFO)
+#prefix
+mihate = commands.Bot(command_prefix="%")
 # prefix = (os.environ['PREFIX'])
+
 token = input("Enter bot token: ")
+
+#aegis
+linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)
 
 class randomHiuraEmbed:
     def __init__(self,rarity):
@@ -44,39 +52,54 @@ class randomHiuraEmbed:
         return embed
 
 # on-ready console notification & bot presence
-@client.event
+@mihate.event
 async def on_ready():
     os.system("cls")
     print(text2art("mihate", font='tarty1'))
-    print("Logged in as {0.user}".format(client))
-    await client.change_presence(
+    print("Logged in as {0.user}".format(mihate))
+    await mihate.change_presence(
         activity=discord.Activity(type=discord.ActivityType.listening,
-                                  name=(client.command_prefix + "help")))
+                                  name=(mihate.command_prefix + "help")))
+@mihate.event
+async def on_message(message):
+
+    if message.author == mihate.user:
+        return
+    URL = URLExtract().find_urls(message.content)[0]
+    domain = urlparse(URL).netloc
+    print(URL)
+    print(domain)
+    if (domain in linksJSON):
+        print('\033[31m'+text2art("!aegis!", font='tarty1'))
+        print('A message containing illegal link '+message.content+' sent by '+message.author.name+'#'+message.author.discriminator+' was detected by AEGIS')
+        #await message.delete()
+        await message.channel.send(">>> **User "+message.author.mention+" tried to send malicious links.**"+"\n\n"+"@here do **NOT** click on these link(s)."+"\n\n"+"These link(s) will steal your account information at best and compromise your machine at worst.")
+    await mihate.process_commands(message)
 
 # greet command
-@client.command(help="Greets the user")
+@mihate.command(help="Greets the user")
 async def greet(ctx):
     await ctx.channel.send("Hello, I'm Mihate Hiura!")
     await ctx.channel.send(
         "https://cloud.neoservices.xyz/f/97138729272743b595af/?raw=1")
 
 # change prefix command
-@client.command(help="Change the prefix of the bot")
+@mihate.command(help="Change the prefix of the bot")
 async def prefix(ctx, prefArg):
     dispNP = "The new bot prefix is " + prefArg
     await ctx.channel.send(dispNP)
-    client.command_prefix = prefArg
-    await client.change_presence(
+    mihate.command_prefix = prefArg
+    await mihate.change_presence(
         activity=discord.Activity(type=discord.ActivityType.listening,
-                                  name=(client.command_prefix + "help")))
+                                  name=(mihate.command_prefix + "help")))
 
 # random lineart command
-@client.command(help="Sends a random ASCII line art")
+@mihate.command(help="Sends a random ASCII line art")
 async def lineart(ctx):
     await ctx.channel.send(randart())
 
 # random hiura image
-@client.command(help="Sends an image of Hiura with randomized rarity")
+@mihate.command(help="Sends an image of Hiura with randomized rarity")
 async def imageroll(ctx):
     seed(round(time.time() * 1000))
     rng = randint(0,1000)
@@ -98,5 +121,5 @@ async def imageroll(ctx):
             await ctx.channel.send(file=urHiura.createFile(),embed=urHiura.createEmbed())
 
 # dev token
-client.run(token)
-# client.run(os.environ['TOKEN'])
+mihate.run(token)
+# mihate.run(os.environ['TOKEN'])
