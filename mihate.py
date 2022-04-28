@@ -14,10 +14,11 @@ from urllib.parse import urlparse
 #logging
 logging.basicConfig(level=logging.INFO)
 #prefix
-mihate = commands.Bot(command_prefix="%")
-# prefix = (os.environ['PREFIX'])
+mihate = commands.Bot(command_prefix=(os.environ['PREFIX']))
+#token
+mihate.run(os.environ['TOKEN'])
 
-token = input("Enter bot token: ")
+#token = input("Enter bot token: ")
 
 #aegis
 linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)
@@ -60,6 +61,8 @@ async def on_ready():
     await mihate.change_presence(
         activity=discord.Activity(type=discord.ActivityType.listening,
                                   name=(mihate.command_prefix + "help")))
+
+# AEGIS anti spam link protection
 @mihate.event
 async def on_message(message):
 
@@ -118,7 +121,3 @@ async def imageroll(ctx):
     elif(975<rng<1000):
             urHiura = randomHiuraEmbed('UR')
             await ctx.channel.send(file=urHiura.createFile(),embed=urHiura.createEmbed())
-
-# dev token
-mihate.run(token)
-# mihate.run(os.environ['TOKEN'])
