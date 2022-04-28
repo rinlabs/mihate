@@ -1,5 +1,6 @@
 import discord
 import logging
+from dotenv import load_dotenv
 import os
 from art import *
 from random import *
@@ -10,57 +11,26 @@ import requests
 import json
 from urlextract import URLExtract
 from urllib.parse import urlparse
+from clearScreen import *
+from randomHiuraEmbed import *
 
+
+#load_dotenv
+load_dotenv('.env')
 #logging
 logging.basicConfig(level=logging.INFO)
 #prefix
-mihate = commands.Bot(command_prefix=(os.environ['PREFIX']))
-#token
-mihate.run(os.environ['TOKEN'])
-
-#token = input("Enter bot token: ")
+mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),activity=discord.Activity(type=discord.ActivityType.listening,name=(os.getenv('PREFIX') + "help")))
 
 #aegis
 linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)
 
-class randomHiuraEmbed:
-    def __init__(self,rarity):
-        self.rarity = rarity
-        self.semipath = './assets/'+self.rarity+'/'
-        self.list = os.listdir(self.semipath)
-        self.RNG = random.choice(self.list)
-        self.path = self.semipath+self.RNG;
-
-    def colorGet(self):
-        if (self.rarity == 'Common'):
-            return 0xffffff
-        elif(self.rarity == 'Rare'):
-            return 0xa7a7ff
-        elif(self.rarity == 'Elite'):
-            return 0xcda7ff
-        elif(self.rarity == 'SSR'):
-            return 0xfff169
-        elif(self.rarity == 'UR'):
-            return 0x80ff69
-
-    def createFile(self):
-        return discord.File(self.path,filename = "image.jpg")
-
-    def createEmbed(self):
-        embed = discord.Embed(title = "Mihate Hiura",description="You rolled a "+self.rarity+" Hiura! "+randart(),color=self.colorGet())
-        attach =  self.createFile()
-        embed.set_image(url='attachment://image.jpg')
-        return embed
-
 # on-ready console notification & bot presence
 @mihate.event
 async def on_ready():
-    os.system("cls")
+    clear()
     print(text2art("mihate", font='tarty1'))
     print("Logged in as {0.user}".format(mihate))
-    await mihate.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.listening,
-                                  name=(mihate.command_prefix + "help")))
 
 # AEGIS anti spam link protection
 @mihate.event
@@ -121,3 +91,5 @@ async def imageroll(ctx):
     elif(975<rng<1000):
             urHiura = randomHiuraEmbed('UR')
             await ctx.channel.send(file=urHiura.createFile(),embed=urHiura.createEmbed())
+
+mihate.run(os.getenv('TOKEN'))
