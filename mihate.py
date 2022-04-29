@@ -14,14 +14,12 @@ from urllib.parse import urlparse
 from clearScreen import *
 from randomHiuraEmbed import *
 
-
 #load_dotenv
 load_dotenv('.env')
 #logging
 logging.basicConfig(level=logging.INFO)
 #prefix
 mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),activity=discord.Activity(type=discord.ActivityType.listening,name=(os.getenv('PREFIX') + "help")))
-
 #aegis
 linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)
 
@@ -72,7 +70,7 @@ async def lineart(ctx):
 
 # random hiura image
 @mihate.command(help="Sends an image of Hiura with randomized rarity")
-async def imageroll(ctx):
+async def hiuraroll(ctx):
     seed(round(time.time() * 1000))
     rng = randint(0,1000)
     name = "Mihate Hiura"
