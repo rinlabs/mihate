@@ -1,4 +1,4 @@
-FROM python:alpine3.15
+FROM python:3.7.13-slim-buster
 
 WORKDIR /apps/mihate
 
