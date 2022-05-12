@@ -33,7 +33,6 @@ async def on_ready():
 # AEGIS anti spam link protection
 @mihate.event
 async def on_message(message):
-
     if message.author == mihate.user:
         return
     if (URLExtract().has_urls(message.content) == True):
@@ -74,10 +73,10 @@ async def hiuraroll(ctx):
     seed(round(time.time() * 1000))
     rng = randint(0,1000)
     name = "Mihate Hiura"
-    if(0<rng<450):
+    if(0<rng<550):
             commonHiura = randomHiuraEmbed('Common')
             await ctx.channel.send(file=commonHiura.createFile(),embed=commonHiura.createEmbed())
-    elif(450<rng<750):
+    elif(550<rng<750):
             rareHiura = randomHiuraEmbed('Rare')
             await ctx.channel.send(file=rareHiura.createFile(),embed=rareHiura.createEmbed())
     elif(750<rng<850):

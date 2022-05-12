@@ -1,4 +1,4 @@
-FROM python:3.11-rc-bullseye
+FROM python:bullseye
 
 WORKDIR /apps/mihate
 
