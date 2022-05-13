@@ -17,7 +17,7 @@ class randomHiuraEmbed:
         elif(self.rarity == 'Rare'):
             return 0xa7a7ff
         elif(self.rarity == 'Elite'):
-            return 0xcda7ff
+            return 0xff6600
         elif(self.rarity == 'SSR'):
             return 0xfff169
         elif(self.rarity == 'UR'):
