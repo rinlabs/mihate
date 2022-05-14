@@ -13,6 +13,7 @@ from urlextract import URLExtract
 from urllib.parse import urlparse
 from clearScreen import *
 from randomHiuraEmbed import *
+import sqlite3
 
 #load_dotenv
 load_dotenv('.env')
@@ -26,6 +27,7 @@ linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").
 # on-ready console notification & bot presence
 @mihate.event
 async def on_ready():
+    # db = sqlite3.connect('hiuradb.sqlite')
     clear()
     print(text2art("mihate", font='tarty1'))
     print("Logged in as {0.user}".format(mihate))
@@ -40,7 +42,7 @@ async def on_message(message):
             print('\033[31m'+text2art("!aegis!", font='tarty1'))
             print('A message containing illegal link '+message.content+' sent by '+message.author.name+'#'+message.author.discriminator+' was detected by AEGIS')
             #await message.delete()
-            await message.channel.send(">>> **User "+message.author.mention+" tried to send malicious links.**"+"\n\n"+"@here do **NOT** click on these link(s)."+"\n\n"+"These link(s) will steal your account information at best and compromise your machine at worst.")
+            await message.channel.send(">>> **User "+message.author.mention+" tried to send malicious links.**"+"\n\n"+"@here do **NOT** click on these link(s)."+"\n\n"+"These link(s) will steal your account information at best and compromise your device at worst.")
         await mihate.process_commands(message)
     elif (URLExtract().has_urls(message.content) == False):
         await mihate.process_commands(message)
