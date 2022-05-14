@@ -23,11 +23,23 @@ class randomHiuraEmbed:
         elif(self.rarity == 'UR'):
             return 0x80ff69
 
+    def setDesc(self):
+        if (self.rarity == 'Common'):
+            return 'Hmmm, '
+        elif(self.rarity == 'Rare'):
+            return 'Huh, '
+        elif(self.rarity == 'Elite'):
+            return 'Damn, '
+        elif(self.rarity == 'SSR'):
+            return 'Wow! '
+        elif(self.rarity == 'UR'):
+            return 'Holy Smokes! '
+
     def createFile(self):
         return discord.File(self.path,filename = "image.jpg")
 
     def createEmbed(self):
-        embed = discord.Embed(title = "Mihate Hiura",description="You rolled a "+self.rarity+" Hiura! "+randart(),color=self.colorGet())
+        embed = discord.Embed(title = "Mihate Hiura",description=self.setDesc()+"You rolled a "+self.rarity+" Hiura!",color=self.colorGet())
         attach =  self.createFile()
         embed.set_image(url='attachment://image.jpg')
         return embed
