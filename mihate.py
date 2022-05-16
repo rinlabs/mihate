@@ -13,7 +13,7 @@ from urlextract import URLExtract
 from urllib.parse import urlparse
 from clearScreen import *
 from randomHiuraEmbed import *
-import sqlite3
+from ownershipDbCon import *
 
 #load_dotenv
 load_dotenv('.env')
@@ -27,7 +27,6 @@ linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").
 # on-ready console notification & bot presence
 @mihate.event
 async def on_ready():
-    # db = sqlite3.connect('hiuradb.sqlite')
     clear()
     print(text2art("mihate", font='tarty1'))
     print("Logged in as {0.user}".format(mihate))
@@ -76,19 +75,23 @@ async def hiuraroll(ctx):
     rng = randint(0,1000)
     name = "Mihate Hiura"
     if(0<rng<550):
-            commonHiura = randomHiuraEmbed('Common')
+            commonHiura = randomHiuraEmbed('Common',ctx)
             await ctx.channel.send(file=commonHiura.createFile(),embed=commonHiura.createEmbed())
+            makeOwnership(commonHiura.userID,commonHiura.RNG,'Common')
     elif(550<rng<750):
-            rareHiura = randomHiuraEmbed('Rare')
+            rareHiura = randomHiuraEmbed('Rare',ctx)
             await ctx.channel.send(file=rareHiura.createFile(),embed=rareHiura.createEmbed())
+            makeOwnership(rareHiura.userID,rareHiura.RNG,'Rare')
     elif(750<rng<850):
-            eliteHiura = randomHiuraEmbed('Elite')
+            eliteHiura = randomHiuraEmbed('Elite',ctx)
             await ctx.channel.send(file=eliteHiura.createFile(),embed=eliteHiura.createEmbed())
+            makeOwnership(eliteHiura.userID,eliteHiura.RNG,'Elite')
     elif(850<rng<975):
-            ssrHiura = randomHiuraEmbed('SSR')
+            ssrHiura = randomHiuraEmbed('SSR',ctx)
             await ctx.channel.send(file=ssrHiura.createFile(),embed=ssrHiura.createEmbed())
+            makeOwnership(ssrHiura.userID,ssrHiura.RNG,'SSR')
     elif(975<rng<1000):
-            urHiura = randomHiuraEmbed('UR')
+            urHiura = randomHiuraEmbed('UR',ctx)
             await ctx.channel.send(file=urHiura.createFile(),embed=urHiura.createEmbed())
-
+            makeOwnership(urHiura.userID,urHiura.RNG,'UR')
 mihate.run(os.getenv('TOKEN'))
