@@ -9,11 +9,10 @@ import time
 from discord.ext import commands
 import requests
 import json
-from urlextract import URLExtract
-from urllib.parse import urlparse
 from modules.clearScreen import *
 from modules.randomHiuraEmbed import *
 from modules.ownershipDbCon import *
+from modules.aegis.aegisEmbed import *
 
 #load_dotenv
 load_dotenv('.env')
@@ -21,8 +20,6 @@ load_dotenv('.env')
 logging.basicConfig(level=logging.INFO)
 #prefix
 mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),activity=discord.Activity(type=discord.ActivityType.listening,name=(os.getenv('PREFIX') + "help")))
-#aegis
-linksJSON = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)
 
 # on-ready console notification & bot presence
 @mihate.event
@@ -37,16 +34,11 @@ async def on_message(message):
     # checks if the author is the bot itself
     if message.author == mihate.user:
         return
-    # checks if the message contains URLs
-    if (URLExtract().has_urls(message.content) == True):
-        #checks if the URL is malicious
-        if (urlparse(URLExtract().find_urls(message.content)[0]).netloc in linksJSON):
-            print('\033[31m'+text2art("!aegis!", font='tarty1'))
-            print('A message containing illegal link '+message.content+' sent by '+message.author.name+'#'+message.author.discriminator+' was detected by AEGIS')
-            #await message.delete()
-            await message.channel.send(">>> **User "+message.author.mention+" tried to send malicious links.**"+"\n\n"+"@here do **NOT** click on these link(s)."+"\n\n"+"These link(s) will steal your account information at best and compromise your device at worst.")
-        await mihate.process_commands(message)
-    elif (URLExtract().has_urls(message.content) == False):
+    else:
+        aAnalysis = aegis(message.content)
+        if (aAnalysis.threatValue !=0):
+            aEmbed = aegisEmbed(aAnalysis,message)
+            await message.channel.send(embed=aEmbed.createEmbed())
         await mihate.process_commands(message)
 
 # greet command
