@@ -23,16 +23,15 @@ class aegis:
             # print(json.dumps(json_response, indent=4, sort_keys=False))
             urlJSON = json_response['url']
             threat = json_response['threat']
-            signature = json_response['payloads'][0]['signature']
-            vtDetection = json_response['payloads'][0]['virustotal']['result']
+            signature = json_response['tags'][3]
             detection = 1
-            return URLHaus(urlJSON,threat,signature,vtDetection,detection)
+            return URLHaus(urlJSON,threat,signature,detection)
         elif json_response['query_status'] == 'no_results':
             # not found
-            return URLHaus("","","","",0)
+            return URLHaus("","","",0)
         else:
             # something happened
-            return URLHaus("","","","",0)
+            return URLHaus("","","",0)
 
     def queryHyperphish(self,url):
         urlList = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)

@@ -11,7 +11,7 @@ class aegisEmbed:
         descHyper =""
 
         if (self.aegis.URLHaus.detection != 0):
-                descHaus = "\n\nURLHaus Malicious URL Database\n\nThreat: " + self.aegis.URLHaus.threat + "\nThreat Signature: " + self.aegis.URLHaus.signature + "\nVirustotal Detection: " + self.aegis.URLHaus.vtDetection
+                descHaus = "\n\nURLHaus Malicious URL Database\n\nThreat: " + self.aegis.URLHaus.threat + "\nThreat Signature: " + self.aegis.URLHaus.signature
         if (self.aegis.hyperphish != 0):
                 descHyper = "\n\nHyperphish Phishing URL Database""\n\nThreat: Phishing Link"
 
