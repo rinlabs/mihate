@@ -11,9 +11,9 @@ import requests
 import json
 from urlextract import URLExtract
 from urllib.parse import urlparse
-from clearScreen import *
-from randomHiuraEmbed import *
-from ownershipDbCon import *
+from modules.clearScreen import *
+from modules.randomHiuraEmbed import *
+from modules.ownershipDbCon import *
 
 #load_dotenv
 load_dotenv('.env')
@@ -34,9 +34,12 @@ async def on_ready():
 # AEGIS anti spam link protection
 @mihate.event
 async def on_message(message):
+    # checks if the author is the bot itself
     if message.author == mihate.user:
         return
+    # checks if the message contains URLs
     if (URLExtract().has_urls(message.content) == True):
+        #checks if the URL is malicious
         if (urlparse(URLExtract().find_urls(message.content)[0]).netloc in linksJSON):
             print('\033[31m'+text2art("!aegis!", font='tarty1'))
             print('A message containing illegal link '+message.content+' sent by '+message.author.name+'#'+message.author.discriminator+' was detected by AEGIS')
@@ -53,16 +56,6 @@ async def greet(ctx):
     await ctx.channel.send(
         "https://cloud.neoservices.xyz/f/97138729272743b595af/?raw=1")
 
-# change prefix command
-@mihate.command(help="Change the prefix of the bot")
-async def prefix(ctx, prefArg):
-    dispNP = "The new bot prefix is " + prefArg
-    await ctx.channel.send(dispNP)
-    mihate.command_prefix = prefArg
-    await mihate.change_presence(
-        activity=discord.Activity(type=discord.ActivityType.listening,
-                                  name=(mihate.command_prefix + "help")))
-
 # random lineart command
 @mihate.command(help="Sends a random ASCII line art")
 async def lineart(ctx):
@@ -71,8 +64,10 @@ async def lineart(ctx):
 # random hiura image
 @mihate.command(help="Sends an image of Hiura with randomized rarity")
 async def hiuraroll(ctx):
+    # sets random seed number based on system time
     seed(round(time.time() * 1000))
     rng = randint(0,1000)
+
     name = "Mihate Hiura"
     if(0<rng<550):
             commonHiura = randomHiuraEmbed('Common',ctx)

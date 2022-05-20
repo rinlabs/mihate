@@ -3,3 +3,4 @@
 /assets/template.psd
 .dockerignore
 rollOwnership.sqlite
+/modules/__pycache__
