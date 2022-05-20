@@ -1,14 +1,9 @@
 import sys
 import requests
 import json
-import vt
-import os
-import sys
 from dotenv import load_dotenv
 from modules.urlProcessing import *
 from modules.aegis.URLHaus import *
-
-load_dotenv('.env')
 
 class aegis:
     def __init__(self,url):
@@ -25,6 +20,7 @@ class aegis:
         json_response = response.json()
         if json_response['query_status'] == 'ok':
             # returns query result
+            # print(json.dumps(json_response, indent=4, sort_keys=False))
             urlJSON = json_response['url']
             threat = json_response['threat']
             signature = json_response['payloads'][0]['signature']

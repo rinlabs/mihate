@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 
 def extractUrl(url):
     if (URLExtract().has_urls(urlCheck(url)) == True):
-            return URLExtract().find_urls(urlCheck(url))[1]
+            return URLExtract().find_urls(urlCheck(url))
     elif (URLExtract().has_urls(urlCheck(url)) == False):
             return
 
