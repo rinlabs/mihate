@@ -2,8 +2,9 @@ import discord
 import os
 import random
 from art import *
-from ownershipDbCon import *
+from modules.ownershipDbCon import *
 
+# class constructor
 class randomHiuraEmbed:
     def __init__(self,rarity,ctx):
         self.rarity = rarity
@@ -14,6 +15,7 @@ class randomHiuraEmbed:
         self.userID = ctx.author.id
         self.handle = ctx.author.mention
 
+    # returns border color based on the rarity
     def colorGet(self):
         if (self.rarity == 'Common'):
             return 0xffffff
@@ -26,6 +28,7 @@ class randomHiuraEmbed:
         elif(self.rarity == 'UR'):
             return 0x80ff69
 
+    # returns description based on the rarity
     def setDesc(self):
         if (self.rarity == 'Common'):
             return 'Hmmm, '
@@ -38,15 +41,18 @@ class randomHiuraEmbed:
         elif(self.rarity == 'UR'):
             return 'Holy Smokes! '
 
+    # set additional message based on ownership
     def makeOwnershipMsg(self):
         if (getOwnership(self.userID,self.RNG,self.rarity) == 0):
             return 'Neat! You have found a new variant of Hiura!'
         else:
             return ""
 
+    # creates embed picture
     def createFile(self):
         return discord.File(self.path,filename = "image.jpg")
 
+    # creates embed
     def createEmbed(self):
         embed = discord.Embed(title = "Mihate Hiura",\
                                 description=self.setDesc()+self.handle+" rolled a "+self.rarity+" Hiura!"+"\n\n"+self.makeOwnershipMsg(),\
