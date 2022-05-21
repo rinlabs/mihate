@@ -1,6 +1,5 @@
 class URLHaus:
-    def __init__(self,url,threat,signature,detection):
+    def __init__(self,url,threat,detection):
         self.url = url
         self.threat = threat
-        self.signature = signature
         self.detection = detection
