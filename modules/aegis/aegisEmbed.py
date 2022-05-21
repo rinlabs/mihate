@@ -11,36 +11,50 @@ class aegisEmbed:
     def getFlag(self):
         flagHaus = ""
         flagHyper = ""
+        flagAIPDB = ""
 
         # adds URLHaus to flag
         if(len(self.aegis.URLHaus) != 0):
-            flagHaus = "\n\nURLHaus Malicious URL Database"
+            flagHaus = "\nURLHaus Malicious URL Database"
 
         # adds Hyperphish to flag
         if(len(self.aegis.hyperphish) != 0):
             flagHyper = "\nHyperphish Phishing URL Database"
 
-        return flagHaus + flagHyper
+        # adds Hyperphish to flag
+        if(len(self.aegis.abuseipdb) != 0):
+            flagAIPDB = "\nAbuseIPDB IP Reputation Center"
+
+        return flagHaus + flagHyper + flagAIPDB
 
     def makeDescription(self):
         descHaus = []
         descHyper = []
+        descAIPDB = []
         descHausStr = ""
         descHyperStr = ""
+        descAIPDBStr = ""
 
         # adds URL + threat to URLHaus array
         for index,i in enumerate(self.aegis.URLHaus):
-            if (self.aegis.URLHaus[index].detection != 0):
-                    descHaus.append("\n\nURL: "+self.aegis.URLHaus[index].url+"\nThreat: " + self.aegis.URLHaus[index].threat)
+                descHaus.append("\n\nURL: "+self.aegis.URLHaus[index].url+"\nThreat: " + self.aegis.URLHaus[index].threat)
 
         # adds URL + threat to hyperphish array
         for index,i in enumerate(self.aegis.hyperphish):
-            if (self.aegis.hyperphish[index].detection != 0):
-                    descHyper.append("\n\nURL: "+self.aegis.hyperphish[index].url+"\nThreat: Phishing Link")
+                descHyper.append("\n\nURL: "+self.aegis.hyperphish[index].url+"\nThreat: Phishing Link")
 
-        descHaus = "".join(descHaus) # converts array to string
-        descHyper = "".join(descHyper)
-        return descHaus + descHyper
+        # adds URL + details to abuseipdb array
+        for index,i in enumerate(self.aegis.abuseipdb):
+                descAIPDB.append("\n\nURL: "+self.aegis.abuseipdb[index].domain+\
+                                "\nIP: "+self.aegis.abuseipdb[index].ip+\
+                                "\nAbuse Confidence Score: "+str(self.aegis.abuseipdb[index].abuseConfidence)+\
+                                "\nCountry: "+self.aegis.abuseipdb[index].country+\
+                                "\nReports: "+str(self.aegis.abuseipdb[index].totalReports)+\
+                                "\nIP Type: "+self.aegis.abuseipdb[index].ipType)
+        descHausStr = "".join(descHaus) # converts array to string
+        descHyperStr = "".join(descHyper) # converts array to string
+        descAIPDBStr = "".join(descAIPDB)
+        return descHausStr + descHyperStr + descAIPDBStr
 
     def createEmbed(self):
         embed = discord.Embed(title = "Mihate Hiura",\

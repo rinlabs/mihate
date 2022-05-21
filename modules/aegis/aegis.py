@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import sys
 import requests
 import json
@@ -5,12 +7,14 @@ from dotenv import load_dotenv
 from modules.aegis.urlProcessing import *
 from modules.aegis.classes.URLHaus import *
 from modules.aegis.classes.hyperphish import *
+from modules.aegis.classes.abuseIPDB import *
 
 class aegis:
     def __init__(self,url):
         self.url = extractUrl(url)
         self.URLHaus = self.queryURLHaus(url)
         self.hyperphish = self.queryHyperphish(url)
+        self.abuseipdb = self.queryAbuseIPDB(url)
         self.threatValue = self.getThreatValue()
 
     def queryURLHaus(self,url):
@@ -31,6 +35,7 @@ class aegis:
 
     def queryHyperphish(self,url):
         hyperphishArray = []
+        # fetch hyperphish domain list
         urlList = json.loads(requests.get("https://api.hyperphish.com/gimme-domains").text)
         # checks if the message contains URLs
         for i in extractUrl(url):
@@ -38,9 +43,38 @@ class aegis:
                 hyperphishArray.append(Hyperphish(i,1))
         return hyperphishArray
 
+    def queryAbuseIPDB(self,url):
+        abuseIPDBArray = []
+        #defining AbuseIPDB endpoint
+        endpoint = 'https://api.abuseipdb.com/api/v2/check'
+        print(getv4List(url))
+        for i in getv4List(url):
+            #constructs query parameters
+            queryString = {
+                'ipAddress' : i,
+                'maxAgeInDays' : '90'
+            }
+            headers = {
+                'Accept': 'application/json',
+                'Key': os.getenv('ABUSEIPDB_KEY')
+            }
+            response = requests.request(method = 'GET',url=endpoint,headers = headers,params = queryString).json()
+            print(response)
+            if (int(response['data']['totalReports']) > 0):
+                domain = response['data']['domain']
+                ip = response['data']['ipAddress']
+                abuseConfidence = response['data']['abuseConfidenceScore']
+                country = response['data']['countryCode']
+                totalReports = response['data']['totalReports']
+                ipType = response['data']['usageType']
+                detection = 1
+                abuseIPDBArray.append(AbuseIPDB(domain,ip,abuseConfidence,country,totalReports,ipType,detection))
+        return abuseIPDBArray
+
     def getThreatValue(self):
         URLHausThreatVal = 0
         HyperphishThreatVal = 0
+        AbuseIPDBThreatVal = 0
 
         # sums all detected value in array URLHausArray containing class URLHaus
         for index,i in enumerate(self.URLHaus):
@@ -50,4 +84,7 @@ class aegis:
         for index,i in enumerate(self.hyperphish):
             HyperphishThreatVal += self.hyperphish[index].detection
 
-        return URLHausThreatVal + HyperphishThreatVal
+        for index,i in enumerate(self.abuseipdb):
+            AbuseIPDBThreatVal += self.abuseipdb[index].detection
+
+        return URLHausThreatVal + HyperphishThreatVal + AbuseIPDBThreatVal
