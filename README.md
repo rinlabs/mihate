@@ -1,3 +1,3 @@
 # mihate
 
-A discord chat-bot written in python.
+A discord bot written in python.
