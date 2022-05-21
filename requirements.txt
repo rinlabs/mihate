@@ -1,5 +1,7 @@
 art==5.6
 discord.py==1.7.3
+dnspython==2.2.1
+iocextract==1.13.1
 python-dotenv==0.20.0
 requests==2.27.1
 sqlitedict==2.0.0
