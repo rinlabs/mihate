@@ -22,7 +22,6 @@ class aegis:
             # Parse the response from the API
             json_response = response.json()
             if json_response['query_status'] == 'ok':
-                # returns query result
                 # print(json.dumps(json_response, indent=4, sort_keys=False))
                 urlJSON = json_response['url']
                 threat = json_response['threat']
@@ -43,9 +42,11 @@ class aegis:
         URLHausThreatVal = 0
         HyperphishThreatVal = 0
 
+        # sums all detected value in array URLHausArray containing class URLHaus
         for index,i in enumerate(self.URLHaus):
             URLHausThreatVal += self.URLHaus[index].detection
 
+        # sums all detected value in array jyperphishArray containing class hyperphish
         for index,i in enumerate(self.hyperphish):
             HyperphishThreatVal += self.hyperphish[index].detection
 

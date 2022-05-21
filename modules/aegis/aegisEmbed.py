@@ -3,17 +3,23 @@ from modules.aegis.aegis import *
 from os.path import join
 
 class aegisEmbed:
+    # class constructor
     def __init__(self,aegis,message):
-        self.aegis = aegis
-        self.message = message
+        self.aegis = aegis # aegis class
+        self.message = message # command issuer message class
 
     def getFlag(self):
         flagHaus = ""
         flagHyper = ""
+
+        # adds URLHaus to flag
         if(len(self.aegis.URLHaus) != 0):
             flagHaus = "\n\nURLHaus Malicious URL Database"
+
+        # adds Hyperphish to flag
         if(len(self.aegis.hyperphish) != 0):
             flagHyper = "\nHyperphish Phishing URL Database"
+
         return flagHaus + flagHyper
 
     def makeDescription(self):
@@ -21,14 +27,18 @@ class aegisEmbed:
         descHyper = []
         descHausStr = ""
         descHyperStr = ""
+
+        # adds URL + threat to URLHaus array
         for index,i in enumerate(self.aegis.URLHaus):
             if (self.aegis.URLHaus[index].detection != 0):
                     descHaus.append("\n\nURL: "+self.aegis.URLHaus[index].url+"\nThreat: " + self.aegis.URLHaus[index].threat)
+
+        # adds URL + threat to hyperphish array
         for index,i in enumerate(self.aegis.hyperphish):
             if (self.aegis.hyperphish[index].detection != 0):
                     descHyper.append("\n\nURL: "+self.aegis.hyperphish[index].url+"\nThreat: Phishing Link")
 
-        descHaus = "".join(descHaus)
+        descHaus = "".join(descHaus) # converts array to string
         descHyper = "".join(descHyper)
         return descHaus + descHyper
 
