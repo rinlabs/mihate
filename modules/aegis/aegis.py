@@ -2,9 +2,9 @@ import sys
 import requests
 import json
 from dotenv import load_dotenv
-from modules.urlProcessing import *
-from modules.aegis.URLHaus import *
-from modules.aegis.hyperphish import *
+from modules.aegis.urlProcessing import *
+from modules.aegis.classes.URLHaus import *
+from modules.aegis.classes.hyperphish import *
 
 class aegis:
     def __init__(self,url):
@@ -23,7 +23,7 @@ class aegis:
             json_response = response.json()
             if json_response['query_status'] == 'ok':
                 # returns query result
-                print(json.dumps(json_response, indent=4, sort_keys=False))
+                # print(json.dumps(json_response, indent=4, sort_keys=False))
                 urlJSON = json_response['url']
                 threat = json_response['threat']
                 detection = 1
@@ -36,7 +36,6 @@ class aegis:
         # checks if the message contains URLs
         for i in extractUrl(url):
             if (i in urlList):
-                print(1)
                 hyperphishArray.append(Hyperphish(i,1))
         return hyperphishArray
 

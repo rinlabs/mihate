@@ -9,9 +9,9 @@ import time
 from discord.ext import commands
 import requests
 import json
-from modules.clearScreen import *
-from modules.randomHiuraEmbed import *
-from modules.ownershipDbCon import *
+from modules.cli.clearScreen import *
+from modules.hiuraroll.randomHiuraEmbed import *
+from modules.db.ownershipDbCon import *
 from modules.aegis.aegisEmbed import *
 
 #load_dotenv
@@ -35,10 +35,12 @@ async def on_message(message):
     if message.author == mihate.user:
         return
     else:
-        aAnalysis = aegis(message.content)
-        if (aAnalysis.threatValue !=0):
-            aEmbed = aegisEmbed(aAnalysis,message)
-            await message.channel.send(embed=aEmbed.createEmbed())
+        if (URLExtract().has_urls(urlCheck(message.content)) == True):
+            aAnalysis = aegis(message.content)
+            if (aAnalysis.threatValue !=0):
+                aEmbed = aegisEmbed(aAnalysis,message)
+                await message.channel.send(embed=aEmbed.createEmbed())
+                await mihate.process_commands(message)
         await mihate.process_commands(message)
 
 # greet command

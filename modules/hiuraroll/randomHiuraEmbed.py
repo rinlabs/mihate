@@ -2,7 +2,7 @@ import discord
 import os
 import random
 from art import *
-from modules.ownershipDbCon import *
+from modules.db.ownershipDbCon import *
 
 # class constructor
 class randomHiuraEmbed:
