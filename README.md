@@ -1,4 +1,5 @@
 
+![logo](assets/mihate-logo.png)
 # mihate
 
 > A multifunction discord bot written in python.
