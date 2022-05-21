@@ -9,11 +9,11 @@ class randomHiuraEmbed:
     def __init__(self,rarity,ctx):
         self.rarity = rarity
         self.semipath = './assets/'+self.rarity+'/'
-        self.list = os.listdir(self.semipath)
-        self.RNG = random.choice(self.list)
-        self.path = self.semipath+self.RNG
-        self.userID = ctx.author.id
-        self.handle = ctx.author.mention
+        self.list = os.listdir(self.semipath) #lists all picture in a directory
+        self.RNG = random.choice(self.list) # randomly pick an image
+        self.path = self.semipath+self.RNG # sets the image path
+        self.userID = ctx.author.id # command issuer's userid
+        self.handle = ctx.author.mention # command issuer's discord handle
 
     # returns border color based on the rarity
     def colorGet(self):
