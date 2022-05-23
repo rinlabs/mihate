@@ -4,6 +4,7 @@ on:
   # run it on push to the default repository branch
   release:
     types: [published]
+  workflow_dispatch:
 
 
 jobs:
