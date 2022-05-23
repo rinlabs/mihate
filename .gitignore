@@ -1,7 +1,6 @@
 .env
 /__pycache__
 /assets/template.psd
-.dockerignore
 rollOwnership.sqlite
 /modules/__pycache__
 /modules/aegis/__pycache__
