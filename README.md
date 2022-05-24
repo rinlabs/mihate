@@ -9,8 +9,9 @@
 2. AbuseIPDB API Key
 
 ## 🚀 Getting Started
+🐋 Docker
 ```sh
-docker run -v /path/rollOwnership.sqlite:/apps/mihate/rollOwnership.sqlite -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEIPDB_KEY=<ABUSEIPDB_APIKEY" -e "PREFIX=<BOT_PREFIX>" ghcr.io/rinlabs/mihate:latest
+docker run -v /path/rollOwnership.sqlite:/home/mihate/rollOwnership.sqlite -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEIPDB_KEY=<ABUSEIPDB_APIKEY" -e "PREFIX=<BOT_PREFIX>" ghcr.io/rinlabs/mihate:latest
 ```
 
 ## 🪄 Features & Commands
