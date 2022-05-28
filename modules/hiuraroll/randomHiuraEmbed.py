@@ -1,19 +1,24 @@
 import discord
 import os
 import random
-from art import *
-from modules.db.ownershipDbCon import *
+from modules.db.ownershipDbCon import getOwnership
+
 
 # class constructor
 class randomHiuraEmbed:
-    def __init__(self,rarity,ctx):
+    def __init__(self, rarity, ctx):
         self.rarity = rarity
         self.semipath = './assets/'+self.rarity+'/'
-        self.list = os.listdir(self.semipath) #lists all picture in a directory
-        self.RNG = random.choice(self.list) # randomly pick an image
-        self.path = self.semipath+self.RNG # sets the image path
-        self.userID = ctx.author.id # command issuer's userid
-        self.handle = ctx.author.mention # command issuer's discord handle
+        # lists all picture in a directory
+        self.list = os.listdir(self.semipath)
+        # randomly pick an image
+        self.RNG = random.choice(self.list)
+        # sets the image path
+        self.path = self.semipath+self.RNG
+        # command issuer's userid
+        self.userID = ctx.author.id
+        # command issuer's discord handle
+        self.handle = ctx.author.mention
 
     # returns border color based on the rarity
     def colorGet(self):
@@ -43,20 +48,20 @@ class randomHiuraEmbed:
 
     # set additional message based on ownership
     def makeOwnershipMsg(self):
-        if (getOwnership(self.userID,self.RNG,self.rarity) == 0):
+        if (getOwnership(self.userID, self.RNG, self.rarity) == 0):
             return 'Neat! You have found a new variant of Hiura!'
         else:
             return ""
 
     # creates embed picture
     def createFile(self):
-        return discord.File(self.path,filename = "image.jpg")
+        return discord.File(self.path, filename="image.jpg")
 
     # creates embed
     def createEmbed(self):
-        embed = discord.Embed(title = "Mihate Hiura",\
-                                description=self.setDesc()+self.handle+" rolled a "+self.rarity+" Hiura!"+"\n\n"+self.makeOwnershipMsg(),\
-                                color=self.colorGet())
-        attach =  self.createFile()
+        embed = discord.Embed(title="Mihate Hiura",
+                              description=self.setDesc()+self.handle+" rolled a "+self.rarity
+                              + " Hiura!"+"\n\n"+self.makeOwnershipMsg(),
+                              color=self.colorGet())
         embed.set_image(url='attachment://image.jpg')
         return embed
