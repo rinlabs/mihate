@@ -8,7 +8,7 @@ from modules.db.ownershipDbCon import getOwnership
 class randomHiuraEmbed:
     def __init__(self, rarity, ctx):
         self.rarity = rarity
-        self.semipath = './assets/'+self.rarity+'/'
+        self.semipath = './assets/embeds/hiuraroll/'+self.rarity+'/'
         # lists all picture in a directory
         self.list = os.listdir(self.semipath)
         # randomly pick an image

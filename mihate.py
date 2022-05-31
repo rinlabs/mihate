@@ -24,18 +24,16 @@ mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),
                       type=discord.ActivityType.listening,
                       name=(os.getenv('PREFIX') + "help")))
 
+
 # on-ready console notification & bot presence
-
-
 @mihate.event
 async def on_ready():
     clear()
     print(text2art("mihate", font='tarty1'))
     print("Logged in as {0.user}".format(mihate))
 
+
 # AEGIS anti spam link protection
-
-
 @mihate.event
 async def on_message(message):
     # checks if the author is the bot itself
@@ -46,29 +44,26 @@ async def on_message(message):
             aAnalysis = aegis(message.content)
             if (aAnalysis.threatValue != 0):
                 aEmbed = aegisEmbed(aAnalysis, message)
-                await message.channel.send(embed=aEmbed.createEmbed())
+                await message.channel.send(file=aEmbed.createThumb(), embed=aEmbed.createEmbed())
                 await mihate.process_commands(message)
         await mihate.process_commands(message)
 
+
 # greet command
-
-
 @mihate.command(help="Greets the user")
 async def greet(ctx):
     await ctx.channel.send("Hello, I'm Mihate Hiura!")
     await ctx.channel.send(
         "https://cloud.neoservices.xyz/f/97138729272743b595af/?raw=1")
 
+
 # random lineart command
-
-
 @mihate.command(help="Sends a random ASCII line art")
 async def lineart(ctx):
     await ctx.channel.send(randart())
 
+
 # random hiura image
-
-
 @mihate.command(help="Sends an image of Hiura with randomized rarity")
 async def hiuraroll(ctx):
     # sets random seed number based on system time

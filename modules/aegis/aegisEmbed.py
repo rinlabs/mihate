@@ -1,4 +1,5 @@
 import discord
+import os
 
 
 class aegisEmbed:
@@ -65,6 +66,11 @@ class aegisEmbed:
         descAIPDBStr = "".join(descAIPDB)
         return descHausStr + descHyperStr + descAIPDBStr
 
+    # creates embed thumbnail
+    def createThumb(self):
+        return discord.File('./assets/embeds/aegis/hiura_no.jpg', 'image.jpg')
+
+    # creates embed
     def createEmbed(self):
         embed = discord.Embed(title="Mihate Hiura",
                               description="**This link(s) has been flagged by:"
@@ -74,4 +80,5 @@ class aegisEmbed:
                               + "\n\n"
                               + "@here do **NOT** click on these link(s).",
                               color=0xFF0000)
+        embed.set_thumbnail(url='attachment://image.jpg')
         return embed
