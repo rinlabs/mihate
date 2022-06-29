@@ -2,6 +2,8 @@ from urlextract import URLExtract
 import dns
 import dns.resolver
 import iocextract
+import tld
+from tld import get_tld
 
 
 def extractUrl(url):
@@ -9,6 +11,17 @@ def extractUrl(url):
         return URLExtract().find_urls(urlCheck(url))
     elif (URLExtract().has_urls(urlCheck(url)) is False):
         return
+
+
+def extractDomain(url):
+    domainName = []
+    try:
+        domainName = get_tld(url, as_object=True, fix_protocol=True).fld
+    except tld.exceptions.TldDomainNotFound:
+        print("FLD Not Found/Is IP")
+    except tld.exceptions.TldBadUrl:
+        print("Bad URL")
+    return domainName
 
 
 def urlCheck(url):
