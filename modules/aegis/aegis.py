@@ -1,7 +1,7 @@
 import os
 import requests
 import json
-from modules.aegis.urlProcessing import extractUrl, getv4List
+from modules.aegis.urlProcessing import extractUrl, getv4List, extractDomain
 from modules.aegis.classes.URLHaus import URLHaus
 from modules.aegis.classes.hyperphish import Hyperphish
 from modules.aegis.classes.abuseIPDB import AbuseIPDB
@@ -14,6 +14,19 @@ class aegis:
         self.hyperphish = self.queryHyperphish(url)
         self.abuseipdb = self.queryAbuseIPDB(url)
         self.threatValue = self.getThreatValue()
+
+    def queryHyperphish(self, url):
+        hyperphishArray = []
+        # fetch hyperphish domain list
+        urlList = json.loads(requests.get(
+            "https://api.hyperphish.com/gimme-domains").text)
+        # checks if the message contains URLs
+        extractedURL = extractUrl(url)
+        for i in extractedURL:
+            fld = extractDomain(i)
+            if (fld in urlList):
+                hyperphishArray.append(Hyperphish(i, 1))
+        return hyperphishArray
 
     def queryURLHaus(self, url):
         URLHausArray = []
@@ -31,17 +44,6 @@ class aegis:
                 detection = 1
                 URLHausArray.append(URLHaus(urlJSON, threat, detection))
         return URLHausArray
-
-    def queryHyperphish(self, url):
-        hyperphishArray = []
-        # fetch hyperphish domain list
-        urlList = json.loads(requests.get(
-            "https://api.hyperphish.com/gimme-domains").text)
-        # checks if the message contains URLs
-        for i in extractUrl(url):
-            if (i in urlList):
-                hyperphishArray.append(Hyperphish(i, 1))
-        return hyperphishArray
 
     def queryAbuseIPDB(self, url):
         abuseIPDBArray = []
@@ -78,13 +80,13 @@ class aegis:
         HyperphishThreatVal = 0
         AbuseIPDBThreatVal = 0
 
-        # sums all detected value in array URLHausArray
-        for index, i in enumerate(self.URLHaus):
-            URLHausThreatVal += self.URLHaus[index].detection
-
         # sums all detected value in array hyperphishArray
         for index, i in enumerate(self.hyperphish):
             HyperphishThreatVal += self.hyperphish[index].detection
+
+        # sums all detected value in array URLHausArray
+        for index, i in enumerate(self.URLHaus):
+            URLHausThreatVal += self.URLHaus[index].detection
 
         for index, i in enumerate(self.abuseipdb):
             AbuseIPDBThreatVal += self.abuseipdb[index].detection
