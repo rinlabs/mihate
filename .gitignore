@@ -9,3 +9,4 @@ rollOwnership.sqlite
 /modules/db/__pycache__
 /modules/hiuraroll/__pycache__
 /modules/aegis/classes/__pycache__
+/modules/nekomimi/__pycache__
