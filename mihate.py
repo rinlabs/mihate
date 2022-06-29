@@ -13,7 +13,7 @@ from modules.hiuraroll.randomHiuraEmbed import randomHiuraEmbed
 from modules.db.ownershipDbCon import makeOwnership
 from modules.aegis.aegisEmbed import aegisEmbed
 from modules.aegis.aegis import aegis
-from modules.nekomimi.nekomimi import nekomimi
+#from modules.nekomimi.nekomimi import nekomimi
 
 # load_dotenv
 load_dotenv('.env')
