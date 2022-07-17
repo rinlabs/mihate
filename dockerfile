@@ -9,5 +9,6 @@ COPY . .
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+RUN mkdir /home/mihate/db
 
 CMD ["python","mihate.py"]
