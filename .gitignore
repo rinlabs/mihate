@@ -1,7 +1,6 @@
 .env
 /__pycache__
 /assets/template.psd
-rollOwnership.sqlite
 /modules/__pycache__
 /modules/aegis/__pycache__
 /modules/classes/__pycache__
@@ -10,3 +9,4 @@ rollOwnership.sqlite
 /modules/hiuraroll/__pycache__
 /modules/aegis/classes/__pycache__
 /modules/nekomimi/__pycache__
+rollOwnership.sqlite

@@ -11,7 +11,7 @@
 ## 🚀 Getting Started
 🐋 Docker
 ```sh
-docker run -v /path/rollOwnership.sqlite:/home/mihate/rollOwnership.sqlite -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEIPDB_KEY=<ABUSEIPDB_APIKEY" -e "PREFIX=<BOT_PREFIX>" ghcr.io/rinlabs/mihate:latest
+docker run -v /path/db:/home/mihate/db -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEIPDB_KEY=<ABUSEIPDB_APIKEY>" -e "PREFIX=<BOT_PREFIX>" ghcr.io/rinlabs/mihate:latest
 ```
 
 ## 🪄 Features & Commands
