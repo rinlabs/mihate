@@ -22,8 +22,8 @@ logging.basicConfig(level=logging.INFO)
 # prefix
 mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),
                       activity=discord.Activity(
-                      type=discord.ActivityType.listening,
-                      name=(os.getenv('PREFIX') + "help")))
+                          type=discord.ActivityType.listening,
+                          name=(os.getenv('PREFIX') + "help")))
 
 
 # on-ready console notification & bot presence
@@ -45,7 +45,8 @@ async def on_message(message):
             aAnalysis = aegis(message.content)
             if (aAnalysis.threatValue != 0):
                 aEmbed = aegisEmbed(aAnalysis, message)
-                await message.channel.send(file=aEmbed.createThumb(), embed=aEmbed.createEmbed())
+                await message.channel.send(file=aEmbed.createThumb(),
+                                           embed=aEmbed.createEmbed())
                 await mihate.process_commands(message)
         await mihate.process_commands(message)
 
@@ -71,27 +72,27 @@ async def hiuraroll(ctx):
     seed(round(time.time() * 1000))
     rng = randint(0, 1000)
 
-    if(0 < rng < 550):
+    if (0 < rng < 550):
         commonHiura = randomHiuraEmbed('Common', ctx)
         await ctx.channel.send(file=commonHiura.createFile(),
                                embed=commonHiura.createEmbed())
         makeOwnership(commonHiura.userID, commonHiura.RNG, 'Common')
-    elif(550 < rng < 750):
+    elif (550 < rng < 750):
         rareHiura = randomHiuraEmbed('Rare', ctx)
         await ctx.channel.send(file=rareHiura.createFile(),
                                embed=rareHiura.createEmbed())
         makeOwnership(rareHiura.userID, rareHiura.RNG, 'Rare')
-    elif(750 < rng < 850):
+    elif (750 < rng < 850):
         eliteHiura = randomHiuraEmbed('Elite', ctx)
         await ctx.channel.send(file=eliteHiura.createFile(),
                                embed=eliteHiura.createEmbed())
         makeOwnership(eliteHiura.userID, eliteHiura.RNG, 'Elite')
-    elif(850 < rng < 975):
+    elif (850 < rng < 975):
         ssrHiura = randomHiuraEmbed('SSR', ctx)
         await ctx.channel.send(file=ssrHiura.createFile(),
                                embed=ssrHiura.createEmbed())
         makeOwnership(ssrHiura.userID, ssrHiura.RNG, 'SSR')
-    elif(975 < rng < 1000):
+    elif (975 < rng < 1000):
         urHiura = randomHiuraEmbed('UR', ctx)
         await ctx.channel.send(file=urHiura.createFile(),
                                embed=urHiura.createEmbed())
