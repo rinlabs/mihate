@@ -1,11 +1,11 @@
-import discord
+import time
+import os
 import logging
+from random import seed, randint
+import discord
 from dotenv import load_dotenv
 from urlextract import URLExtract
-import os
 from art import text2art, randart
-from random import seed, randint
-import time
 from discord.ext import commands
 from modules.cli.clearScreen import clear
 from modules.aegis.urlProcessing import urlCheck
@@ -13,6 +13,7 @@ from modules.hiuraroll.randomHiuraEmbed import randomHiuraEmbed
 from modules.db.ownershipDbCon import makeOwnership
 from modules.aegis.aegisEmbed import aegisEmbed
 from modules.aegis.aegis import aegis
+from modules.hiurahelp.hiurahelp import helpEmbed
 #from modules.nekomimi.nekomimi import nekomimi
 
 # load_dotenv
@@ -25,6 +26,8 @@ mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),
                           type=discord.ActivityType.listening,
                           name=(os.getenv('PREFIX') + "help")))
 
+#remove default help command
+mihate.remove_command('help')
 
 # on-ready console notification & bot presence
 @mihate.event
@@ -49,6 +52,12 @@ async def on_message(message):
                                            embed=aEmbed.createEmbed())
                 await mihate.process_commands(message)
         await mihate.process_commands(message)
+
+
+@mihate.command()
+async def help(ctx):
+    embed= helpEmbed(os.getenv('PREFIX'))
+    await ctx.channel.send(embed=embed)
 
 
 # greet command
