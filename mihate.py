@@ -14,6 +14,7 @@ from modules.db.ownershipDbCon import makeOwnership
 from modules.aegis.aegisEmbed import aegisEmbed
 from modules.aegis.aegis import aegis
 from modules.hiurahelp.hiurahelp import helpEmbed
+from modules.memberjoin.joinGreetEmbed import *
 #from modules.nekomimi.nekomimi import nekomimi
 
 # load_dotenv
@@ -54,6 +55,13 @@ async def on_message(message):
         await mihate.process_commands(message)
 
 
+@mihate.event
+async def on_member_join(member):
+    await mihate.get_channel(idchannel).send(file=joinFile(),embed=joinEmbed(member))
+    await mihate.process_commands(message)
+
+
+# help override
 @mihate.command()
 async def help(ctx):
     embed= helpEmbed(os.getenv('PREFIX'))
@@ -61,7 +69,7 @@ async def help(ctx):
 
 
 # greet command
-@mihate.command(help="Greets the user")
+@mihate.command()
 async def greet(ctx):
     await ctx.channel.send("Hello, I'm Mihate Hiura!")
     await ctx.channel.send(
@@ -69,13 +77,13 @@ async def greet(ctx):
 
 
 # random lineart command
-@mihate.command(help="Sends a random ASCII line art")
+@mihate.command()
 async def lineart(ctx):
     await ctx.channel.send(randart())
 
 
 # random hiura image
-@mihate.command(help="Sends an image of Hiura with randomized rarity")
+@mihate.command()
 async def hiuraroll(ctx):
     # sets random seed number based on system time
     seed(round(time.time() * 1000))
@@ -106,6 +114,16 @@ async def hiuraroll(ctx):
         await ctx.channel.send(file=urHiura.createFile(),
                                embed=urHiura.createEmbed())
         makeOwnership(urHiura.userID, urHiura.RNG, 'UR')
+
+# coinflip
+@mihate.command()
+async def coinflip(ctx):
+    seed(round(time.time() * 1000))
+    rng = randint(0,1)
+    if(rng == 0):
+        await ctx.channel.send("Heads!")
+    elif(rng == 1):
+        await ctx.channel.send("Tails!")
 
 
 mihate.run(os.getenv('TOKEN'))
