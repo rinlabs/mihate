@@ -67,17 +67,18 @@ class aegisEmbed:
 
     # creates embed thumbnail
     def createThumb(self):
-        return discord.File('./assets/embeds/aegis/hiura_no.jpg', 'image.jpg')
+        return discord.File('./assets/embeds/aegis/hiura_no.jpg', filename = 'image.jpg')
 
     # creates embed
     def createEmbed(self):
-        embed = discord.Embed(title="Mihate Hiura",
-                              description="**This link(s) has been flagged by:"
+        embed = discord.Embed(description="**This link(s) has been flagged by:"
                               + self.getFlag()+self.makeDescription()
                               + "\n\n" "User "+self.message.author.mention
                               + " tried to send malicious links flagged by one or multiple databases and antivirus engines.**"
                               + "\n\n"
                               + "@here do **NOT** click on these link(s).",
                               color=0xFF0000)
+        embed.set_author(name="Mihate Hiura")
+        embed.set_footer(text="© Rinlabs 2022")
         embed.set_thumbnail(url='attachment://image.jpg')
         return embed
