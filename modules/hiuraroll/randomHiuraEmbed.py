@@ -59,9 +59,10 @@ class randomHiuraEmbed:
 
     # creates embed
     def createEmbed(self):
-        embed = discord.Embed(title="Mihate Hiura",
-                              description=self.setDesc()+self.handle+" rolled a "+self.rarity
+        embed = discord.Embed(description=self.setDesc()+self.handle+" rolled a "+self.rarity
                               + " Hiura!"+"\n\n"+self.makeOwnershipMsg(),
                               color=self.colorGet())
+        embed.set_author(name="Mihate Hiura")
+        embed.set_footer(text="© Rinlabs 2022")
         embed.set_image(url='attachment://image.jpg')
         return embed
