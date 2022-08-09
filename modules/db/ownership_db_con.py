@@ -1,3 +1,5 @@
+"""Docstring"""
+
 from sqlitedict import SqliteDict
 
 # hiuraroll ownership sqlite database
@@ -6,12 +8,13 @@ rollOwnership = SqliteDict("db/rollOwnership.sqlite",
 
 
 # gets ownership status from sqlite database
-def getOwnership(userID, RNG, rarity):
+def get_ownership(user_id, rng, rarity):
+    """Returns ownership status"""
     ownership = 0
     for item in rollOwnership.items():
-        ownershipInfo = ("%s=%s" % (item))
-        if ((str(userID) in ownershipInfo) & (RNG in ownershipInfo)
-                & (rarity in ownershipInfo)):
+        ownership_info = ("%s=%s" % (item))
+        if ((str(user_id) in ownership_info) & (rng in ownership_info)
+                & (rarity in ownership_info)):
             ownership = 1
             break
         else:
@@ -20,14 +23,15 @@ def getOwnership(userID, RNG, rarity):
 
 
 # if not owned, create ownership and commit to database
-def makeOwnership(userID, RNG, rarity):
+def make_ownership(user_id, rng, rarity):
+    """Creates new ownership"""
     index = len(rollOwnership) + 1
-    if (getOwnership(userID, RNG, rarity) == 0):
+    if get_ownership(user_id, rng, rarity == 0):
         rollOwnership[index] = {
-            "user_id": userID,
-            "image_id": RNG,
+            "user_id": user_id,
+            "image_id": rng,
             "rarity": rarity
         }
         rollOwnership.commit()
     else:
-        print(getOwnership(userID, RNG, rarity))
+        print(get_ownership(user_id, rng, rarity))

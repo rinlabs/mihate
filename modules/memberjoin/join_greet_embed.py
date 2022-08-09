@@ -1,14 +1,16 @@
 import discord
 
-def joinFile():
+def join_file():
+    """Returns join embed thumbnail"""
     discord.File('./assets/embeds/hiuraroll/SSR012.jpg', 'image.jpg')
 
 
-def joinEmbed(member):
+def join_embed(member):
+    """Returns join embed """
     embed = discord.Embed(color=0xFFFF96)
     embed.add_field(name="**Hello, "
                               +member.mention
-                              +" !**", 
+                              +" !**",
                     value="Welcome to"
                               + member.guild.name
                               + "!"

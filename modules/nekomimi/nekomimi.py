@@ -7,11 +7,11 @@ class nekomimi:
         self.thumb = "./assets/embeds/nekomimi/hiura_neko.jpg"
 
     # creates embed picture
-    def createThumb(self):
+    def craete_thumb(self):
         return discord.File(self.thumb, filename="image.jpg")
 
     # creates embed
-    def createEmbed(self):
+    def create_embed(self):
         embed = discord.Embed(title="Mihate Hiura",
                               color=0x00FF00)
         embed.set_image(url=self.url)

@@ -1,58 +1,62 @@
 import os
-import requests
 import json
-from modules.aegis.urlProcessing import extractUrl, getv4List, extractDomain
-from modules.aegis.classes.URLHaus import URLHaus
+import requests
+from modules.aegis.url_processing import extract_url, get_v4_list, extract_domain
+from modules.aegis.classes.urlhaus import URLHaus
 from modules.aegis.classes.hyperphish import Hyperphish
-from modules.aegis.classes.abuseIPDB import AbuseIPDB
+from modules.aegis.classes.abuse_ipdb import AbuseIPDB
 
 
-class aegis:
+class Aegis:
+    """Scans text for malicious links and IP"""
     def __init__(self, url):
-        self.url = extractUrl(url)
-        self.URLHaus = self.queryURLHaus(url)
-        self.hyperphish = self.queryHyperphish(url)
-        self.abuseipdb = self.queryAbuseIPDB(url)
-        self.threatValue = self.getThreatValue()
+        self.url = extract_url(url)
+        self.urlhaus = self.query_urlhaus(url)
+        self.hyperphish = self.query_hyperphish(url)
+        self.abuseipdb = self.query_abuseipdb(url)
+        self.threat_value = self.get_threat_value()
 
-    def queryHyperphish(self, url):
-        hyperphishArray = []
+    def query_hyperphish(self, url):
+        """Scans message with hyperphish"""
+        hyperphish_array = []
         # fetch hyperphish domain list
-        urlList = json.loads(requests.get(
+        url_list = json.loads(requests.get(
             "https://api.hyperphish.com/gimme-domains").text)
         # checks if the message contains URLs
-        extractedURL = extractUrl(url)
-        for i in extractedURL:
-            fld = extractDomain(i)
-            if (fld in urlList):
-                hyperphishArray.append(Hyperphish(i, 1))
-        return hyperphishArray
+        extracted_url = extract_url(url)
+        for i in extracted_url:
+            fld = extract_domain(i)
+            if fld in url_list:
+                hyperphish_array.append(Hyperphish(i, 1))
+        return hyperphish_array
 
-    def queryURLHaus(self, url):
-        URLHausArray = []
-        for i in extractUrl(url):
+    def query_urlhaus(self, url):
+        """Scans message with URLHaus"""
+        urlhaus_array = []
+        for i in extract_url(url):
             # Construct the HTTP request
-            data = {'url': extractUrl(i)}
+            data = {'url': extract_url(i)}
             response = requests.post(
                 'https://urlhaus-api.abuse.ch/v1/url/', data)
             # Parse the response from the API
             json_response = response.json()
             if json_response['query_status'] == 'ok':
                 # print(json.dumps(json_response, indent=4, sort_keys=False))
-                urlJSON = json_response['url']
+                url_json = json_response['url']
                 threat = json_response['threat']
                 detection = 1
-                URLHausArray.append(URLHaus(urlJSON, threat, detection))
-        return URLHausArray
+                urlhaus_array.append(URLHaus(url_json, threat, detection))
+        return urlhaus_array
 
-    def queryAbuseIPDB(self, url):
-        abuseIPDBArray = []
+    def query_abuseipdb(self, url):
+        """Scans message with AbuseIPDB"""
+        abuseipdb_array = []
         # defining AbuseIPDB endpoint
         endpoint = 'https://api.abuseipdb.com/api/v2/check'
-        print(getv4List(url))
-        for i in getv4List(url):
+        print(get_v4_list(url))
+        for i in get_v4_list(url):
             # constructs query parameters
-            queryString = {
+            query_string = {
                 'ipAddress': i,
                 'maxAgeInDays': '90'
             }
@@ -61,34 +65,35 @@ class aegis:
                 'Key': os.getenv('ABUSEIPDB_KEY')
             }
             response = requests.request(
-                method='GET', url=endpoint, headers=headers, params=queryString).json()
+                method='GET', url=endpoint, headers=headers, params=query_string).json()
             print(response)
-            if (int(response['data']['totalReports']) > 0):
+            if int(response['data']['totalReports']) > 0:
                 domain = response['data']['domain']
                 ip = response['data']['ipAddress']
-                abuseConfidence = response['data']['abuseConfidenceScore']
+                abuse_confidence = response['data']['abuseConfidenceScore']
                 country = response['data']['countryCode']
-                totalReports = response['data']['totalReports']
-                ipType = response['data']['usageType']
+                total_reports = response['data']['totalReports']
+                ip_type = response['data']['usageType']
                 detection = 1
-                abuseIPDBArray.append(AbuseIPDB(
-                    domain, ip, abuseConfidence, country, totalReports, ipType, detection))
-        return abuseIPDBArray
+                abuseipdb_array.append(AbuseIPDB(
+                    domain, ip, abuse_confidence, country, total_reports, ip_type, detection))
+        return abuseipdb_array
 
-    def getThreatValue(self):
-        URLHausThreatVal = 0
-        HyperphishThreatVal = 0
-        AbuseIPDBThreatVal = 0
+    def get_threat_value(self):
+        """Returns the threat value of the message"""
+        urlhaus_threat_val = 0
+        hyperphish_threat_val = 0
+        abuseipdb_threat_val = 0
 
         # sums all detected value in array hyperphishArray
-        for index, i in enumerate(self.hyperphish):
-            HyperphishThreatVal += self.hyperphish[index].detection
+        for index in enumerate(self.hyperphish):
+            hyperphish_threat_val += self.hyperphish[index].detection
 
         # sums all detected value in array URLHausArray
-        for index, i in enumerate(self.URLHaus):
-            URLHausThreatVal += self.URLHaus[index].detection
+        for index in enumerate(self.urlhaus):
+            urlhaus_threat_val += self.urlhaus[index].detection
 
-        for index, i in enumerate(self.abuseipdb):
-            AbuseIPDBThreatVal += self.abuseipdb[index].detection
+        for index in enumerate(self.abuseipdb):
+            abuseipdb_threat_val += self.abuseipdb[index].detection
 
-        return URLHausThreatVal + HyperphishThreatVal + AbuseIPDBThreatVal
+        return urlhaus_threat_val + hyperphish_threat_val + abuseipdb_threat_val

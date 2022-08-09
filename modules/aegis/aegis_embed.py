@@ -1,55 +1,58 @@
 import discord
 
 
-class aegisEmbed:
-    # class constructor
+class AegisEmbed:
+    """Creates warning embed"""
     def __init__(self, aegis, message):
+        """Stores aegis embed information"""
         # aegis class
         self.aegis = aegis
         # command issuer message class
         self.message = message
 
-    def getFlag(self):
-        flagHaus = ""
-        flagHyper = ""
-        flagAIPDB = ""
+    def get_flag(self):
+        """Returns aegis scanner flag"""
+        flag_haus = ""
+        flag_hyper = ""
+        flag_aipdb = ""
 
         # adds URLHaus to flag
-        if(len(self.aegis.URLHaus) != 0):
-            flagHaus = "\nURLHaus Malicious URL Database"
+        if len(self.aegis.URLHaus) != 0:
+            flag_haus = "\nURLHaus Malicious URL Database"
 
         # adds Hyperphish to flag
-        if(len(self.aegis.hyperphish) != 0):
-            flagHyper = "\nHyperphish Phishing URL Database"
+        if len(self.aegis.hyperphish) != 0:
+            flag_hyper = "\nHyperphish Phishing URL Database"
 
         # adds Hyperphish to flag
-        if(len(self.aegis.abuseipdb) != 0):
-            flagAIPDB = "\nAbuseIPDB IP Reputation Center"
+        if len(self.aegis.abuseipdb) != 0:
+            flag_aipdb = "\nAbuseIPDB IP Reputation Center"
 
-        return flagHaus + flagHyper + flagAIPDB
+        return flag_haus + flag_hyper + flag_aipdb
 
-    def makeDescription(self):
-        descHaus = []
-        descHyper = []
-        descAIPDB = []
-        descHausStr = ""
-        descHyperStr = ""
-        descAIPDBStr = ""
+    def make_description(self):
+        """Returns aegis embed description"""
+        desc_haus = []
+        desc_hyper = []
+        desc_aipdb = []
+        desc_haus_str = ""
+        desc_hyper_str = ""
+        desc_aipdb_str = ""
 
         # adds URL + threat to URLHaus array
-        for index, i in enumerate(self.aegis.URLHaus):
-            descHaus.append("\n\nURL: "+self.aegis.URLHaus[index].url
+        for index in enumerate(self.aegis.URLHaus):
+            desc_haus.append("\n\nURL: "+self.aegis.URLHaus[index].url
                             + "\nThreat: "
                             + self.aegis.URLHaus[index].threat)
 
         # adds URL + threat to hyperphish array
-        for index, i in enumerate(self.aegis.hyperphish):
-            descHyper.append("\n\nURL: "+self.aegis.hyperphish[index].url
+        for index in enumerate(self.aegis.hyperphish):
+            desc_hyper.append("\n\nURL: "+self.aegis.hyperphish[index].url
                              + "\nThreat: Phishing Link")
 
         # adds URL + details to abuseipdb array
-        for index, i in enumerate(self.aegis.abuseipdb):
-            descAIPDB.append("\n\nURL: "+self.aegis.abuseipdb[index].domain
+        for index in enumerate(self.aegis.abuseipdb):
+            desc_aipdb.append("\n\nURL: "+self.aegis.abuseipdb[index].domain
                              + "\nIP: "+self.aegis.abuseipdb[index].ip
                              + "\nAbuse Confidence Score: "
                              + str(self.aegis.abuseipdb[index].abuseConfidence)
@@ -59,20 +62,22 @@ class aegisEmbed:
                              + str(self.aegis.abuseipdb[index].totalReports)
                              + "\nIP Type: "+self.aegis.abuseipdb[index].ipType)
         # converts array to string
-        descHausStr = "".join(descHaus)
+        desc_haus_str = "".join(desc_haus)
         # converts array to string
-        descHyperStr = "".join(descHyper)
-        descAIPDBStr = "".join(descAIPDB)
-        return descHausStr + descHyperStr + descAIPDBStr
+        desc_hyper_str = "".join(desc_hyper)
+        desc_aipdb_str = "".join(desc_aipdb)
+        return desc_haus_str + desc_hyper_str + desc_aipdb_str
 
     # creates embed thumbnail
-    def createThumb(self):
+    def create_thumb(self):
+        """Returns aegis embed thumbnail"""
         return discord.File('./assets/embeds/aegis/hiura_no.jpg', filename = 'image.jpg')
 
     # creates embed
-    def createEmbed(self):
+    def create_embed(self):
+        """Returns aegis embed"""
         embed = discord.Embed(description="**This link(s) has been flagged by:"
-                              + self.getFlag()+self.makeDescription()
+                              + self.get_flag()+self.make_description()
                               + "\n\n" "User "+self.message.author.mention
                               + " tried to send malicious links flagged by one or multiple databases and antivirus engines.**"
                               + "\n\n"

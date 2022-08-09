@@ -1,7 +1,8 @@
 import discord
 
 # creates embed
-def helpEmbed(prefix):
+def help_embed(prefix):
+    """Returns help embed"""
     embed = discord.Embed(color=0xFF0064)
     embed.add_field(name="__**Hiuraroll**__", value="Spawns a random Hiura"
                               + "\n\n"
@@ -26,7 +27,7 @@ def helpEmbed(prefix):
                               + "Commands to type: "
                               + "\n"
                               + "**"+prefix+"coinflip**",
-                              inline=False)   
+                              inline=False)
     embed.add_field(name="__**Help**__", value="Invokes this message"
                               + "\n\n"
                               + "Commands to type: "
