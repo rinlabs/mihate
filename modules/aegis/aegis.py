@@ -53,7 +53,7 @@ class Aegis:
         abuseipdb_array = []
         # defining AbuseIPDB endpoint
         endpoint = 'https://api.abuseipdb.com/api/v2/check'
-        print(get_v4_list(url))
+        ##print(get_v4_list(url))
         for i in get_v4_list(url):
             # constructs query parameters
             query_string = {
@@ -66,7 +66,7 @@ class Aegis:
             }
             response = requests.request(
                 method='GET', url=endpoint, headers=headers, params=query_string).json()
-            print(response)
+            ##print(response)
             if int(response['data']['totalReports']) > 0:
                 domain = response['data']['domain']
                 ip = response['data']['ipAddress']
@@ -85,15 +85,17 @@ class Aegis:
         hyperphish_threat_val = 0
         abuseipdb_threat_val = 0
 
+        print(self.abuseipdb[0].detection)
+
         # sums all detected value in array hyperphishArray
-        for index in enumerate(self.hyperphish):
+        for index,i in enumerate(self.hyperphish):
             hyperphish_threat_val += self.hyperphish[index].detection
 
         # sums all detected value in array URLHausArray
-        for index in enumerate(self.urlhaus):
+        for index,i in enumerate(self.urlhaus):
             urlhaus_threat_val += self.urlhaus[index].detection
 
-        for index in enumerate(self.abuseipdb):
+        for index,i in enumerate(self.abuseipdb):
             abuseipdb_threat_val += self.abuseipdb[index].detection
 
         return urlhaus_threat_val + hyperphish_threat_val + abuseipdb_threat_val

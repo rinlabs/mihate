@@ -17,7 +17,7 @@ class AegisEmbed:
         flag_aipdb = ""
 
         # adds URLHaus to flag
-        if len(self.aegis.URLHaus) != 0:
+        if len(self.aegis.urlhaus) != 0:
             flag_haus = "\nURLHaus Malicious URL Database"
 
         # adds Hyperphish to flag
@@ -40,27 +40,27 @@ class AegisEmbed:
         desc_aipdb_str = ""
 
         # adds URL + threat to URLHaus array
-        for index in enumerate(self.aegis.URLHaus):
-            desc_haus.append("\n\nURL: "+self.aegis.URLHaus[index].url
+        for index,i in enumerate(self.aegis.urlhaus):
+            desc_haus.append("\n\nURL: "+self.aegis.urlhaus[index].url
                             + "\nThreat: "
-                            + self.aegis.URLHaus[index].threat)
+                            + self.aegis.urlhaus[index].threat)
 
         # adds URL + threat to hyperphish array
-        for index in enumerate(self.aegis.hyperphish):
+        for index,i in enumerate(self.aegis.hyperphish):
             desc_hyper.append("\n\nURL: "+self.aegis.hyperphish[index].url
                              + "\nThreat: Phishing Link")
 
         # adds URL + details to abuseipdb array
-        for index in enumerate(self.aegis.abuseipdb):
+        for index,i in enumerate(self.aegis.abuseipdb):
             desc_aipdb.append("\n\nURL: "+self.aegis.abuseipdb[index].domain
                              + "\nIP: "+self.aegis.abuseipdb[index].ip
                              + "\nAbuse Confidence Score: "
-                             + str(self.aegis.abuseipdb[index].abuseConfidence)
+                             + str(self.aegis.abuseipdb[index].abuse_confidence)
                              + "\nCountry: "
                              + self.aegis.abuseipdb[index].country
                              + "\nReports: "
-                             + str(self.aegis.abuseipdb[index].totalReports)
-                             + "\nIP Type: "+self.aegis.abuseipdb[index].ipType)
+                             + str(self.aegis.abuseipdb[index].total_reports)
+                             + "\nIP Type: "+self.aegis.abuseipdb[index].ip_type)
         # converts array to string
         desc_haus_str = "".join(desc_haus)
         # converts array to string
