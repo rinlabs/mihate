@@ -1,5 +1,3 @@
-"""Docstring"""
-
 from sqlitedict import SqliteDict
 
 # hiuraroll ownership sqlite database
@@ -26,12 +24,13 @@ def get_ownership(user_id, rng, rarity):
 def make_ownership(user_id, rng, rarity):
     """Creates new ownership"""
     index = len(rollOwnership) + 1
-    if get_ownership(user_id, rng, rarity == 0):
+    if get_ownership(user_id, rng, rarity) == 0:
         rollOwnership[index] = {
             "user_id": user_id,
             "image_id": rng,
             "rarity": rarity
         }
         rollOwnership.commit()
+        print("Committed new data")
     else:
-        print(get_ownership(user_id, rng, rarity))
+        print("No commit")
