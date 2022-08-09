@@ -16,6 +16,7 @@ from modules.aegis.aegis_embed import AegisEmbed
 from modules.aegis.aegis import Aegis
 from modules.hiurahelp.hiura_help import help_embed
 from modules.memberjoin.join_greet_embed import join_file,join_embed
+from modules.hiuragreet.hiura_greet import greet_file,greet_embed
 #from modules.nekomimi.nekomimi import nekomimi
 
 # load_dotenv
@@ -63,6 +64,7 @@ async def on_message(message):
 @mihate.event
 async def on_member_join(member):
     """"Greets new member"""
+    print('Detected new member join')
     await mihate.get_channel(member.idchannel).send(file=join_file(), embed=join_embed(member))
     await mihate.process_commands(member.message)
 
@@ -79,9 +81,8 @@ async def help(ctx):
 @mihate.command()
 async def greet(ctx):
     """"Simple greeting"""
-    await ctx.channel.send("Hello, I'm Mihate Hiura!")
-    await ctx.channel.send(
-        "https://cloud.neoservices.xyz/f/97138729272743b595af/?raw=1")
+    await ctx.channel.send(file=greet_file(),
+                               embed=greet_embed(ctx))
 
 
 # random lineart command
