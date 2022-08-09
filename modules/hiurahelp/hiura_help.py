@@ -1,5 +1,9 @@
 import discord
 
+def help_file():
+    """Returns join embed thumbnail"""
+    return discord.File('./assets/embeds/hiuraroll/Elite/010.jpg', 'image.jpg')
+
 # creates embed
 def help_embed(prefix):
     """Returns help embed"""

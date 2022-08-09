@@ -14,7 +14,7 @@ from modules.hiuraroll.random_hiura_embed import RandomHiuraEmbed
 from modules.db.ownership_db_con import make_ownership
 from modules.aegis.aegis_embed import AegisEmbed
 from modules.aegis.aegis import Aegis
-from modules.hiurahelp.hiura_help import help_embed
+from modules.hiurahelp.hiura_help import help_file,help_embed
 from modules.memberjoin.join_greet_embed import join_file,join_embed
 from modules.hiuragreet.hiura_greet import greet_file,greet_embed
 #from modules.nekomimi.nekomimi import nekomimi
@@ -74,7 +74,8 @@ async def on_member_join(member):
 async def help(ctx):
     """"Help override"""
     embed = help_embed(os.getenv('PREFIX'))
-    await ctx.channel.send(embed=embed)
+    await ctx.channel.send(file=help_file(),
+                                embed=embed)
 
 
 # greet command
