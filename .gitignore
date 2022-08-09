@@ -11,6 +11,7 @@
 /modules/nekomimi/__pycache__
 /modules/hiurahelp/__pycache__
 /modules/memberjoin/__pycache__
+/modules/hiuragreet/__pycache__
 rollOwnership.sqlite
 .github
 .vscode
