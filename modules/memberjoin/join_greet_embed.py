@@ -2,7 +2,7 @@ import discord
 
 def join_file():
     """Returns join embed thumbnail"""
-    discord.File('./assets/embeds/hiuraroll/SSR012.jpg', 'image.jpg')
+    discord.File('./assets/embeds/hiuraroll/SSR/012.jpg', 'image.jpg')
 
 
 def join_embed(member):
