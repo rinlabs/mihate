@@ -14,6 +14,12 @@ def help_embed(prefix):
                               + "\n"
                               + "**"+prefix+"hiuraroll**",
                               inline=False)
+    embed.add_field(name="__**Neko**__", value="Spawns a random cat image"
+                              + "\n\n"
+                              + "Commands to type: "
+                              + "\n"
+                              + "**"+prefix+"neko**",
+                              inline=False)
     embed.add_field(name="__**Hiura Greet**__", value="Greets the user"
                               + "\n\n"
                               + "Commands to type: "
