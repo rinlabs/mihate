@@ -7,12 +7,13 @@
 ## Requirements
 1. Discord Bot Token
 2. AbuseIPDB API Key
+3. TheCatAPI API Key
 
 ## 🚀 Getting Started
 🐋 Docker
 ```sh
 docker volume create mihatedb
-docker run -v mihatedb:/home/mihate/db -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEIPDB_KEY=<ABUSEIPDB_APIKEY>" -e "PREFIX=<BOT_PREFIX>" ghcr.io/rinlabs/mihate:latest
+docker run -v mihatedb:/home/mihate/db -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEIPDB_KEY=<ABUSEIPDB_APIKEY>" -e "CATAPI_KEY=<THECATAPI_APIKEY>" -e "PREFIX=<BOT_PREFIX>" ghcr.io/rinlabs/mihate:latest
 ```
 
 ## 🪄 Features & Commands
@@ -21,10 +22,16 @@ docker run -v mihatedb:/home/mihate/db -e "TOKEN=<DISCORD_BOT_TOKEN>" -e "ABUSEI
    1. AbuseIPDB
    2. URLHaus
    3. Hyperphish
+ - ℹ️ Custom help command
+ `%help`
  - 😀 Greets user
  `%greet`
  - 🎲 Hiura Picture Gacha Minigame
  `%hiuraroll`
  - ✨ Sends random one-line ASCII art
  `%lineart`
+ - 🪙 Coinflip
+ `%coinflip`
+ - 😺 Random Cat Image
+ `%neko`
  
