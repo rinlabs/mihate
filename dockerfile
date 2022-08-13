@@ -11,5 +11,6 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 RUN mkdir /home/mihate/db
 RUN chown mihate /home/mihate/db
+ENV PYTHONPATH "${PYTHONPATH}:/home/mihate"
 
 CMD ["python","mihate.py"]
