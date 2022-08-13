@@ -1,10 +1,10 @@
 import os
 import json
 import requests
-from modules.aegis.url_processing import extract_url, get_v4_list, extract_domain
-from modules.aegis.classes.urlhaus import URLHaus
-from modules.aegis.classes.hyperphish import Hyperphish
-from modules.aegis.classes.abuse_ipdb import AbuseIPDB
+from aegis.url_processing import extract_url, get_v4_list, extract_domain
+from aegis.classes.urlhaus import URLHaus
+from aegis.classes.hyperphish import Hyperphish
+from aegis.classes.abuse_ipdb import AbuseIPDB
 
 
 class Aegis:
