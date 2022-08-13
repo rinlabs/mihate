@@ -1,19 +1,23 @@
+import os
+import json
+import requests
 import discord
 
 
-class nekomimi:
-    def __init__(self):
-        self.url = "https://cataas.com/cat"
-        self.thumb = "./assets/embeds/nekomimi/hiura_neko.jpg"
+def query_catapi():
+    """query catapi for cat images"""
+    endpoint = 'https://api.thecatapi.com/v1/images/search'
+    headers = {
+        'x-api-key': os.getenv('CATAPI_KEY')
+    }
+    response = requests.request(method='GET', url=endpoint, headers=headers).json()
+    return(response[0]['url'])
 
-    # creates embed picture
-    def craete_thumb(self):
-        return discord.File(self.thumb, filename="image.jpg")
-
-    # creates embed
-    def create_embed(self):
-        embed = discord.Embed(title="Mihate Hiura",
-                              color=0x00FF00)
-        embed.set_image(url=self.url)
-        embed.set_thumbnail(url='attachment://image.jpg')
-        return embed
+# creates embed
+def neko_embed():
+    """return cat embed"""
+    embed = discord.Embed(title="**=^..^=**",
+                            color=0xFFFFFF)
+    embed.set_image(url=query_catapi())
+    embed.set_footer(text="© Rinlabs 2022 | Cat image provided by thecatapi.com")
+    return embed
