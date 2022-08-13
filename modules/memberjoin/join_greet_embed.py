@@ -2,7 +2,7 @@ import discord
 
 def join_file():
     """Returns join embed thumbnail"""
-    discord.File('./assets/embeds/hiuraroll/SSR/012.jpg', 'image.jpg')
+    return discord.File('./assets/embeds/hiuraroll/SSR/012.jpg', 'image.jpg')
 
 
 def join_embed(member):
@@ -15,7 +15,8 @@ def join_embed(member):
                               + member.guild.name
                               + "!"
                               + "\n"
-                              + "Enjoy your stay here!",
+                              + "Enjoy your stay here!"
+                              + "\n(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧",
                               inline=False)
     embed.set_author(name="Mihate Hiura")
     embed.set_footer(text="© Rinlabs 2022")

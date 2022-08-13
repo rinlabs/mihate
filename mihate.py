@@ -15,9 +15,9 @@ from modules.db.ownership_db_con import make_ownership
 from modules.aegis.aegis_embed import AegisEmbed
 from modules.aegis.aegis import Aegis
 from modules.hiurahelp.hiura_help import help_file,help_embed
-from modules.memberjoin.join_greet_embed import join_file,join_embed
+#from modules.memberjoin.join_greet_embed import join_file,join_embed
 from modules.hiuragreet.hiura_greet import greet_file,greet_embed
-#from modules.nekomimi.nekomimi import nekomimi
+from modules.nekomimi.nekomimi import neko_embed
 
 # load_dotenv
 load_dotenv('.env')
@@ -25,16 +25,16 @@ load_dotenv('.env')
 logging.basicConfig(level=logging.INFO)
 # prefix
 mihate = commands.Bot(command_prefix=os.getenv('PREFIX'),
-                      activity=discord.Activity(
-                          type=discord.ActivityType.listening,
-                          name=(os.getenv('PREFIX') + "help")))
+                            activity=discord.Activity(
+                                type=discord.ActivityType.listening,
+                                name=(os.getenv('PREFIX') + "help"),
+                             intents=discord.Intents().all))
 
 # remove default help command
 mihate.remove_command('help')
 
+
 # on-ready console notification & bot presence
-
-
 @mihate.event
 async def on_ready():
     """"On-ready console text"""
@@ -61,12 +61,13 @@ async def on_message(message):
         await mihate.process_commands(message)
 
 
-@mihate.event
-async def on_member_join(member):
-    """"Greets new member"""
-    print('Detected new member join')
-    await mihate.get_channel(member.idchannel).send(file=join_file(), embed=join_embed(member))
-    await mihate.process_commands(member.message)
+# new member greeting
+#@mihate.event
+#async def on_member_join(member, guild):
+#    """"Greets new member"""
+#    print('Detected new member join')
+#    await mihate.get_channel(guild.channel).send(file=join_file(), embed=join_embed(member))
+#    await mihate.process_commands(member.message)
 
 
 # help override
@@ -138,6 +139,12 @@ async def coinflip(ctx):
         await ctx.channel.send("Heads!")
     elif rng == 1:
         await ctx.channel.send("Tails!")
+
+# nekomimi
+@mihate.command()
+async def neko(ctx):
+    """"Get random cat image"""
+    await ctx.channel.send(embed=neko_embed())
 
 
 mihate.run(os.getenv('TOKEN'))
