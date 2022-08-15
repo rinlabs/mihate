@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from url_processing import extract_url, get_v4_list, extract_domain
+from aegis.url_processing import extract_url, get_v4_list, extract_domain
 from classes.urlhaus import URLHaus
 from classes.hyperphish import Hyperphish
 from classes.abuse_ipdb import AbuseIPDB
