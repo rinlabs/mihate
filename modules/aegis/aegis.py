@@ -1,10 +1,32 @@
 import os
 import json
 import requests
-from .url_processing import extract_url, get_v4_list, extract_domain
-from aegis.classes.urlhaus import URLHaus
-from aegis.classes.hyperphish import Hyperphish
-from aegis.classes.abuse_ipdb import AbuseIPDB
+from ..urlprocessing.url_processing import extract_url, get_v4_list, extract_domain
+
+class AbuseIPDB:
+    """Stores AbuseIPDB Detection information"""
+    def __init__(self,domain,ip,abuse_confidence,country,total_reports,ip_type,detection):
+        self.domain = domain
+        self.ip = ip
+        self.abuse_confidence = abuse_confidence
+        self.country = country
+        self.total_reports = total_reports
+        self.ip_type = ip_type
+        self.detection = detection
+
+class URLHaus:
+    """Stores AbuseIPDB Detection information"""
+    def __init__(self,url,threat,detection):
+        self.url = url
+        self.threat = threat
+        self.detection = detection
+
+
+class Hyperphish:
+    """Stores Hyperphish Detection information"""
+    def __init__(self,url,detection):
+        self.url = url
+        self.detection = detection
 
 
 class Aegis:
