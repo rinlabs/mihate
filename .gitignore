@@ -5,13 +5,14 @@
 /modules/aegis/__pycache__
 /modules/classes/__pycache__
 /modules/cli/__pycache__
-/modules/db/__pycache__
+/modules/dbcon/__pycache__
 /modules/hiuraroll/__pycache__
 /modules/aegis/classes/__pycache__
 /modules/nekomimi/__pycache__
 /modules/hiurahelp/__pycache__
 /modules/memberjoin/__pycache__
 /modules/hiuragreet/__pycache__
+/modules/urlprocessing/__pycache__
 rollOwnership.sqlite
 .github
 .vscode
