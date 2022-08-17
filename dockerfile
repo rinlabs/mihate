@@ -12,4 +12,4 @@ RUN pip install -r requirements.txt
 RUN mkdir /home/mihate/db
 RUN chown mihate /home/mihate/db
 
-CMD ["python","mihate.py"]
+CMD ["python","src/mihate.py"]
