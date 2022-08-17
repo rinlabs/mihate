@@ -1,8 +1,7 @@
 import os
-import sys
 import random
 import discord
-from modules.db.ownership_db_con import get_ownership
+from modules.dbcon import sqlite_con as sc
 
 # class constructor
 class RandomHiuraEmbed:
@@ -52,7 +51,7 @@ class RandomHiuraEmbed:
     # set additional message based on ownership
     def make_ownership_msg(self):
         """Returns hiuraroll ownership status"""
-        if get_ownership(self.user_id, self.rng, self.rarity) == 0:
+        if sc.get_ownership(self.user_id, self.rng, self.rarity) == 0:
             return 'Neat! You have found a new variant of Hiura!'
         else:
             return ""
