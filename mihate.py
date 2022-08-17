@@ -9,9 +9,9 @@ from art import text2art, randart
 from discord.ext import commands
 
 from modules.cli.clear_screen import clear
-from modules.aegis.url_processing import url_check
-from modules.hiuraroll.random_hiura_embed import RandomHiuraEmbed
-from modules.db.ownership_db_con import make_ownership
+from modules.urlprocessing.url_processing import url_check
+from modules.hiuraroll.roll_embed import RandomHiuraEmbed
+from modules.dbcon.sqlite_con import make_ownership
 from modules.aegis.aegis_embed import AegisEmbed
 from modules.aegis.aegis import Aegis
 from modules.hiurahelp.hiura_help import help_file,help_embed
