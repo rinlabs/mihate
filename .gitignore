@@ -13,6 +13,7 @@
 /modules/memberjoin/__pycache__
 /modules/hiuragreet/__pycache__
 /modules/urlprocessing/__pycache__
+/modules/db
 rollOwnership.sqlite
 .github
 .vscode
